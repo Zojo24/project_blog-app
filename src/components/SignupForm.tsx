@@ -103,7 +103,7 @@ export default function SignupForm() {
       )}
       <div className="form_block">
         계정이 이미 있으신가요?{" "}
-        <Link to="/signup" className="form_link">
+        <Link to="/login" className="form_link">
           로그인하기
         </Link>
       </div>
