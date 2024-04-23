@@ -1,7 +1,8 @@
-export default function PostDetailComponent() {
+import { Link } from "react-router-dom";
+
+export default function PostDetail() {
   return (
     <>
-      {" "}
       <div className="post_detail">
         <div className="post_box">
           <div className="post_title">3-4 네트워크: IP</div>
@@ -12,7 +13,9 @@ export default function PostDetailComponent() {
           </div>
           <div className="post_utils-box">
             <div className="post_delete">삭제</div>
-            <div className="post_edit">수정</div>
+            <div className="post_edit">
+              <Link to={`/post/edit/1`}>수정</Link>
+            </div>
           </div>
           <div className="post_text">
             오랜만에 CS 내용을 가져왔습니다! 네트워크를 구성하는 대표 프로토콜인
