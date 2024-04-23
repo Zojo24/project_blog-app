@@ -301,6 +301,6 @@ footer a:hover {
   color: black;
 }
 
-.form__error {
+.form_error {
   color: red;
 }
