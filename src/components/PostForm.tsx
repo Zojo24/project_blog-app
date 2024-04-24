@@ -1,17 +1,62 @@
+import { useState } from "react";
+
 export default function PostForm() {
+  const [title, setTitle] = useState<string>("");
+  const [summary, setSummary] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const {
+      target: { name, value },
+    } = e;
+    if (name === "title") {
+      setTitle(value);
+    }
+    if (name === "summary") {
+      setSummary(value);
+    }
+    if (name === "content") {
+      setContent(value);
+    }
+  };
   return (
     <form action="/post" method="POST" className="form">
       <div className="form_block">
         <label htmlFor="title">제목</label>
-        <input type="text" name="title" id="title" required />
+        <input
+          type="text"
+          name="title"
+          id="title"
+          required
+          onChange={onChange}
+          value={title}
+        />
       </div>
       <div className="form_block">
         <label htmlFor="summary">요약</label>
-        <input type="text" name="summary" id="summary" required />
+        <input
+          type="text"
+          name="summary"
+          id="summary"
+          required
+          onChange={onChange}
+          value={summary}
+        />
       </div>
       <div className="form_block">
         <label htmlFor="content">내용</label>
-        <textarea name="content" id="content" required />
+        <textarea
+          name="content"
+          id="content"
+          required
+          onChange={onChange}
+          value={content}
+        />
       </div>
       <div className="form_block">
         <input type="submit" value="제출" className="form_btn-submit" />{" "}
