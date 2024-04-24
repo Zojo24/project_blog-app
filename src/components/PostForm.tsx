@@ -1,12 +1,33 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "firebaseApp";
+import AuthContext from "context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function PostForm() {
   const [title, setTitle] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      await addDoc(collection(db, "posts"), {
+        title,
+        summary,
+        content,
+        createAt: new Date()?.toLocaleDateString(),
+        email: user?.email,
+      });
+      toast.success("게시글을 생성했습니다.");
+      navigate("/");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.code);
+    }
   };
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -25,7 +46,7 @@ export default function PostForm() {
     }
   };
   return (
-    <form action="/post" method="POST" className="form">
+    <form onSubmit={onSubmit} className="form">
       <div className="form_block">
         <label htmlFor="title">제목</label>
         <input
