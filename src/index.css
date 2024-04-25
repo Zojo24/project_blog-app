@@ -64,6 +64,7 @@ footer a:focus,
 footer a:hover {
   color: black;
 }
+
 .footer_theme-btn {
   cursor: pointer;
   width: 18px;
@@ -388,4 +389,101 @@ footer a:hover {
 .dark footer,
 .dark header {
   background-color: #111827;
+}
+
+/* comments */
+
+.comments {
+  width: 100%;
+}
+
+.comments_form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.comments_form textarea {
+  min-height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  border: 1px solid lightgray;
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.comments_form .form_block {
+  margin-top: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.comments_form .form_btn-submit {
+  width: 100px;
+  height: 36px;
+  cursor: pointer;
+  font-weight: 500;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.form_block-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.comments_form .form_btn-submit:hover,
+.comments_form .form_btn-submit:focus {
+  background-color: #1945a4;
+}
+
+.comments_list {
+  margin-top: 40px;
+  margin-bottom: 100px;
+}
+
+.comment_box {
+  padding: 12px 0px;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.comment_profile-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+}
+
+.comment_email {
+  font-weight: 500;
+}
+
+.comment_date {
+  color: gray;
+}
+
+.comment_delete {
+  color: gray;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.comment_delete:hover,
+.comment_delete:focus {
+  color: black;
+}
+
+.comment_text {
+  font-size: 14px;
+  padding-top: 4px;
 }
