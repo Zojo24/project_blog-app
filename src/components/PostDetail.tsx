@@ -5,6 +5,7 @@ import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "firebaseApp";
 import Loader from "./Loader";
 import { toast } from "react-toastify";
+import Comments from "./Comments";
 
 export default function PostDetail() {
   const [post, setPost] = useState<PostProps | null>(null);
@@ -37,26 +38,31 @@ export default function PostDetail() {
     <>
       <div className="post_detail">
         {post ? (
-          <div className="post_box">
-            <div className="post_title">{post?.title}</div>
-            <div className="post_profile-box">
-              <div className="post_profile" />
-              <div className="post_author-name">{post?.email}</div>
-              <div className="post_date">{post?.createdAt}</div>
-            </div>
-            <div className="post_utils-box">
-              {post?.category && (
-                <div className="post_category">{post?.category}</div>
-              )}
-              <div className="post_delete" onClick={handleDelete}>
-                삭제
+          <>
+            <div className="post_box">
+              <div className="post_title">{post?.title}</div>
+              <div className="post_profile-box">
+                <div className="post_profile" />
+                <div className="post_author-name">{post?.email}</div>
+                <div className="post_date">{post?.createdAt}</div>
               </div>
-              <div className="post_edit">
-                <Link to={`/posts/edit/${post?.id}`}>수정</Link>
+              <div className="post_utils-box">
+                {post?.category && (
+                  <div className="post_category">{post?.category}</div>
+                )}
+                <div className="post_delete" onClick={handleDelete}>
+                  삭제
+                </div>
+                <div className="post_edit">
+                  <Link to={`/posts/edit/${post?.id}`}>수정</Link>
+                </div>
+              </div>
+              <div className="post_text post_text-pre-wrap">
+                {post?.content}
               </div>
             </div>
-            <div className="post_text post_text-pre-wrap">{post?.content}</div>
-          </div>
+            <Comments />
+          </>
         ) : (
           <Loader />
         )}
