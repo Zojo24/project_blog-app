@@ -45,11 +45,14 @@ export default function PostDetail() {
               <div className="post_date">{post?.createdAt}</div>
             </div>
             <div className="post_utils-box">
+              {post?.category && (
+                <div className="post_category">{post?.category}</div>
+              )}
               <div className="post_delete" onClick={handleDelete}>
                 삭제
               </div>
               <div className="post_edit">
-                <Link to={`/post/edit/${post?.id}`}>수정</Link>
+                <Link to={`/posts/edit/${post?.id}`}>수정</Link>
               </div>
             </div>
             <div className="post_text post_text-pre-wrap">{post?.content}</div>

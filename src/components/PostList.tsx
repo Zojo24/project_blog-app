@@ -7,6 +7,7 @@ import {
   getDocs,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import { db } from "firebaseApp";
 import AuthContext from "context/AuthContext";
@@ -14,8 +15,18 @@ import { toast } from "react-toastify";
 
 interface PostListProps {
   hasNavigation?: boolean;
+  defaultTab?: TabType | CategoryType;
 }
+
 type TabType = "all" | "my";
+
+export type CategoryType = "Frontend" | "Backend" | "Web" | "Native";
+export const CATEGORIES: CategoryType[] = [
+  "Frontend",
+  "Backend",
+  "Web",
+  "Native",
+];
 
 export interface PostProps {
   id?: string;
@@ -26,10 +37,16 @@ export interface PostProps {
   createdAt: string;
   updatedAt: string;
   uid: string;
+  category?: CategoryType;
 }
 
-export default function PostList({ hasNavigation = true }: PostListProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("all");
+export default function PostList({
+  hasNavigation = true,
+  defaultTab = "all",
+}: PostListProps) {
+  const [activeTab, setActiveTab] = useState<TabType | CategoryType>(
+    defaultTab
+  );
   const [posts, setPosts] = useState<PostProps[]>([]);
   const { user } = useContext(AuthContext);
 
@@ -37,6 +54,23 @@ export default function PostList({ hasNavigation = true }: PostListProps) {
     setPosts([]);
     let postsRef = collection(db, "posts");
     let postsQuery = query(postsRef, orderBy("createdAt", "asc"));
+
+    if (activeTab === "my" && user) {
+      postsQuery = query(
+        postsRef,
+        where("uid", "==", user.uid),
+        orderBy("createdAt", "asc")
+      );
+    } else if (activeTab === "all") {
+      postsQuery = query(postsRef, orderBy("createdAt", "asc"));
+    } else {
+      postsQuery = query(
+        postsRef,
+        where("category", "==", activeTab),
+        orderBy("createdAt", "asc")
+      );
+    }
+
     const datas = await getDocs(postsQuery);
     datas?.forEach((doc) => {
       const dataObj = { ...doc.data(), id: doc.id };
@@ -52,10 +86,11 @@ export default function PostList({ hasNavigation = true }: PostListProps) {
       getPosts();
     }
   };
-  console.log(posts);
+
   useEffect(() => {
     getPosts();
   }, [activeTab]);
+
   return (
     <>
       {hasNavigation && (
@@ -74,11 +109,21 @@ export default function PostList({ hasNavigation = true }: PostListProps) {
           >
             나의 글
           </div>
+          {CATEGORIES?.map((category) => (
+            <div
+              key={category}
+              role="presentation"
+              onClick={() => setActiveTab(category)}
+              className={activeTab === category ? "post_navigation-active" : ""}
+            >
+              {category}
+            </div>
+          ))}
         </div>
       )}
       <div className="post_list">
         {posts?.length > 0 ? (
-          posts?.map((post, index) => (
+          posts?.map((post) => (
             <div key={post?.id} className="post_box">
               <Link to={`/posts/${post?.id}`}>
                 <div className="post_profile-box">
