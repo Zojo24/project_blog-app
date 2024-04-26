@@ -86,7 +86,7 @@ export default function Comments({ post, getPost }: CommentsProps) {
             onChange={onChange}
           />
         </div>
-        <div className="form_block">
+        <div className="form_block form_block-reverse">
           <input type="submit" value="입력" className="form_btn-submit" />
         </div>
       </form>
